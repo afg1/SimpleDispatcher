@@ -45,6 +45,9 @@ int main(int argc, char** argv)
         lines.pop_back();
 
         int tid(0);
+        #ifdef __MIC__
+        #pragma offloat target(mic)// Should allow the offloading of the following openmp loop onto the mics, hopefully it will then launch the processes there...
+        #endif
         #pragma omp parallel for private(tid)
         for(int k=0; k<lines.size();k++)
         {
